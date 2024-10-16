@@ -107,6 +107,63 @@
             </div>
         </div>
     </section>
+    <script>
+    // Smooth Scroll for Navigation
+    document.querySelectorAll('nav a').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+
+    // Testimonials Carousel
+    let currentIndex = 0;
+    const testimonials = document.querySelectorAll('.testimonials-col');
+    function showTestimonial(index) {
+        testimonials.forEach((testimonial, i) => {
+            testimonial.style.display = i === index ? 'block' : 'none';
+        });
+    }
+    setInterval(() => {
+        currentIndex = (currentIndex + 1) % testimonials.length;
+        showTestimonial(currentIndex);
+    }, 3000);
+
+    // Back to Top Button
+    const backToTopButton = document.createElement('button');
+    backToTopButton.textContent = '↑ Back to Top';
+    backToTopButton.className = 'back-to-top';
+    document.body.appendChild(backToTopButton);
+
+    window.addEventListener('scroll', () => {
+        backToTopButton.style.display = window.scrollY > 500 ? 'block' : 'none';
+    });
+
+    backToTopButton.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Modal for Course Details
+    document.querySelectorAll('.course-col h3').forEach(course => {
+        course.addEventListener('click', () => {
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <span class="close-button">&times;</span>
+                    <h2>${course.textContent}</h2>
+                    <p>More details about the ${course.textContent} course go here.</p>
+                </div>`;
+            document.body.appendChild(modal);
+            modal.querySelector('.close-button').addEventListener('click', () => {
+                modal.remove();
+            });
+        });
+    });
+</script>
+
     <section class="testimonials">
     <h1>What Our Students Says</h1>
         <p>Lorem ispum dolor sit amet,consectetur adipiscing elit.</p>
